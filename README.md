@@ -18,4 +18,17 @@ Tomcat 8.0
 * 版主：板块帖子管理。
 * 管理员：用户管理，查看网站近期数据统计。
 ## 项目展示
+>>首页
 ![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/index.png)  
+>>主题板块
+![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/posts.png)  
+>>发帖
+![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/post.png)  
+>>主题帖子
+![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/theme_post.png)  
+>>楼中楼
+![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/reply.png)  
+>>回复楼中楼
+![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/reply_emji.png)  
+>>其他用户的个人信息
+![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/otherinfo.png)  
