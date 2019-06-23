@@ -32,3 +32,14 @@ Tomcat 8.0
 ![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/reply_emji.png)  
 >>其他用户的个人信息
 ![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/otherinfo.png)  
+>>其他用户的发帖纪录
+![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/other_posts.png)  
+>>徽章页面
+![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/bandge.png)  
+>>登录页面
+![](https://github.com/cairenhao1314/new_dnfbbs/raw/master/show_img/login.png)  
+
+## 本人负责
+数据库的设计，前端页面后后台功能的实现。
+## 不足和待改进的地方
+网站管理员后台没有实现，应该可以统计网站相关的数据，比如网站的访问量，近期的注册用户，各个板块的发帖情况等等。
