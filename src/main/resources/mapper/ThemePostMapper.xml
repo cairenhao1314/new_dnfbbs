@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.game.dnf.mapper.ThemePostMapper">
+
+    <resultMap id="newThemePost" type="ThemePost">
+        <id column="pid" property="pid"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="postingtime" property="postingtime"/>
+        <result column="pstatus" property="pstatus"/>
+        <result column="pcase" property="pcase"/>
+        <result column="plike" property="plike"/>
+        <result column="visits" property="visits"/>
+        <result column="replynum" property="replynum"/>
+        <result column="callnum" property="callnum"/>
+        <association property="author" select="com.game.dnf.mapper.UserMapper.getNewUser" column="uid"/>
+        <association property="theme" select="com.game.dnf.mapper.ThemeMapper.queryThemeById" column="tmid"/>
+        <association property="type" select="com.game.dnf.mapper.TypeMapper.queryTypeById" column="tyid"/>
+    </resultMap>
+
+    <resultMap id="newReadThemePost" type="ReadThemePost">
+        <association property="themePost" column="pid" select="getThemePost"/>
+        <collection property="replyPosts" column="pid" javaType="ArrayList" ofType="com.game.dnf.pojo.ReplyPost" select="com.game.dnf.mapper.ReplyPostMapper.getAllReplyPostByPid"/>
+    </resultMap>
+
+    <insert id="insertThemePost" parameterType="ThemePost" useGeneratedKeys="true" keyProperty="pid">
+        insert into dnf_theme_post values(null,#{author.uid},#{theme.tmid},#{type.tyid},#{title},#{content},now(),0,0,0,0,0,0);
+    </insert>
+
+    <select id="queryAllThemePost" resultMap="newThemePost">
+        select * from dnf_theme_post
+    </select>
+
+    <select id="queryGoodPostsByTmid" parameterType="int" resultMap="newThemePost">
+        select * from dnf_theme_post where tmid = #{tmid} and pstatus = 0 and pcase in(1,2,3) limit 0,8
+    </select>
+    
+    <select id="queryThemePostsByThemePage" parameterType="ThemePage" resultMap="newThemePost">
+        select * from dnf_theme_post where tmid = #{tmid} and pstatus = 0 and pcase = 0 limit #{firstindex},#{lastindex}
+    </select>
+
+    <select id="queryCountThemePostsByTmid" parameterType="int" resultType="int">
+        select count(*) from dnf_theme_post where tmid = #{tmid} and pstatus = 0
+    </select>
+
+    <select id="getThemePost" parameterType="int" resultMap="newThemePost">
+        select * from dnf_theme_post where pid = #{pid}
+    </select>
+
+    <select id="getReadThemePost" parameterType="int" resultMap="newReadThemePost">
+        select #{pid} as pid
+    </select>
+
+    <select id="getTheme" parameterType="int" resultType="Theme">
+        select * from dnf_theme where tmid = #{tmid}
+    </select>
+
+    <select id="getHotPosts" resultMap="newThemePost">
+        select  * from dnf_theme_post where pstatus = 0 and pcase = 3  limit 0,4
+    </select>
+
+    <select id="getNewPosts" resultMap="newThemePost">
+        select  * from dnf_theme_post where pstatus = 0 and pcase = 2  limit 0,4
+    </select>
+
+    <select id="getGoodPosts" resultMap="newThemePost">
+        select  * from dnf_theme_post where pstatus = 0 and pcase = 1  limit 0,4
+    </select>
+
+    <update id="addPostLike" parameterType="int">
+        update dnf_theme_post set plike = plike + 1 where pid = #{pid}
+    </update>
+
+    <update id="addPostVisit" parameterType="int">
+        update dnf_theme_post set visits = visits + 1 where pid = #{pid}
+    </update>
+
+    <update id="addPostReplynum" parameterType="int">
+        update dnf_theme_post set replynum = replynum + 1 where pid = #{pid}
+    </update>
+
+    <select id="allUserThemePosts" parameterType="int"  resultMap="newThemePost">
+        select * from dnf_theme_post where uid = #{uid} and pstatus = 0
+    </select>
+
+    <update id="delThemePost" parameterType="int">
+        update dnf_theme_post set pstatus = 1 where pid = #{pid}
+    </update>
+
+    <update id="setGoodPost" parameterType="int">
+        update dnf_theme_post set pcase = 1 where pid = #{pid}
+    </update>
+
+    <update id="setTopPost" parameterType="int">
+        update dnf_theme_post set pcase = 2 where pid = #{pid}
+    </update>
+
+    <update id="setHotPost" parameterType="int">
+        update dnf_theme_post set pcase = 3 where pid = #{pid}
+    </update>
+
+
+</mapper>

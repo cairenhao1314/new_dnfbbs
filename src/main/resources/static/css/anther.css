@@ -1,0 +1,163 @@
+.wp {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.bm {
+	margin: 10px 0 8px;
+	height: 29px;
+	border: none;
+	background: transparent;
+	line-height: 29px;
+	zoom: 1;
+}
+
+.z {
+	float: left;
+	padding-right: 10px;
+	font: 12px/1.5 Tahoma, 'Microsoft Yahei', 'Simsun';
+	color: #444;
+	line-height: 29px;
+}
+
+.z a {
+	float: left;
+}
+
+.nvhm {
+	float: left;
+	height: 29px;
+	background: url(../img/anther/home.png) no-repeat 0 0;
+	width: 16px;
+	line-height: 200px;
+	overflow: hidden;
+}
+
+.z em {
+	font-size: 0;
+	float: left;
+	width: 20px;
+	height: 29px;
+	display: block;
+	font-size: 0;
+	background: url(../img/anther/embg.png) no-repeat 3px 50%;
+}
+
+.uhd {
+	padding-top: 10px;
+	border: 1px solid #CCC;
+	border-bottom: none;
+	background: #E5EDF2;
+}
+
+.h {
+	padding-left: 75px;
+}
+
+.avt {
+	display: inline;
+	float: left;
+	margin-left: -65px;
+}
+
+.avt img {
+	padding: 2px;
+	width: 48px;
+	height: 48px;
+	background: #FFF;
+	border: 1px solid;
+	border-color: #F2F2F2 #CDCDCD #CDCDCD #F2F2F2;
+}
+
+.mt {
+	padding-bottom: 0;
+	padding: 10px 0 0 0;
+	font-size: 16px;
+}
+
+.xg1 {
+	color: #999 !important;
+}
+
+.cl:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.tb {
+	margin-top: 10px;
+	line-height: 30px;
+	border-bottom: 1px solid #CDCDCD;
+}
+
+.tb li {
+	float: left;
+	margin: 0 3px -1px 0;
+}
+
+.tb .a a {
+	background: #FFF;
+    font-weight: 700;
+	display: block;
+	padding: 0 10px;
+	border: 1px solid #CCC;
+    border-bottom-color: #FFF;
+}
+li a{
+	padding: 0 10px;
+}
+.tb li a:hover {
+	background: #FFF;
+    font-weight: 700;
+    display: block;
+	border: 1px solid #CCC;
+}
+
+.ct1 {
+	width: auto;
+	min-height: 300px;
+	margin: 0 auto;
+	border: 1px solid #CCC;
+	border-top: none;
+	padding: 20px;
+}
+
+.u_info {
+	padding-bottom: 10px !important;
+	margin-bottom: 10px !important;
+	border-bottom: 1px dashed #CDCDCD
+}
+
+.mbn {
+	font-size: 1em;
+	margin-bottom: 5px !important;
+}
+
+.xw0 {
+	font-weight: 400;
+}
+
+.xg1 {
+	color: #999 !important;
+	font-style: normal;
+}
+
+.xi2 a{
+	color: #369;
+}
+
+.vm{
+	    vertical-align: middle;
+}
+
+.yj{
+	margin-right: 10px;
+}
+
+.info_ul li{
+	    float: left;
+    width: 300px;
+}

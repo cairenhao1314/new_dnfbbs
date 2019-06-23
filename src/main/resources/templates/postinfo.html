@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>地下城与勇士官方论坛</title>
+		<link rel="stylesheet" th:href="@{/css/dnf_index.css}" />
+		<link rel="stylesheet" th:href="@{/css/common_style.css}" />
+		<link rel="stylesheet" th:href="@{/css/posts.css}" />
+		<link rel="stylesheet" th:href="@{/css/postinfo.css}" />
+        <link rel="icon" type="image/x-icon" href="/img/dnf.ico">
+
+        <!--引入layui css+ js-->
+		<link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+		<script type="text/javascript" th:src="@{/layui/layui.all.js}"></script>
+
+		<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+	</head>
+	<body class="dnf_index" >
+	<div class="index_shadow">
+		<div class="shadow_top">
+			<div class="choose_module">
+				<div class="headtop">
+					<a class="collect" href="javascript:;" title="收藏本站"></a>
+				</div>
+				<div class="row_top">
+					<div class="nv">
+						<div class="nv1">
+							<div class="nv1_tab">
+								<a class="a" href="/index" hidefocus="true" title="BBS">
+									<span>论坛首页</span>
+								</a>
+							</div>
+							<div class="nv1_tab cut">
+								<a class="a" hidefocus="true" title="切换版面">
+									<span>切换版块</span>
+								</a>
+								<!--隐藏的模块-->
+								<div class="nav_se">
+									<div class="nav_se_l">
+										<li>
+											<a>游戏讨论</a>
+										</li>
+										<li>
+											<a><span>官方专区</span></a>
+										</li>
+										<li>
+											<a><span>灌水闲谈</span></a>
+										</li>
+										<li>
+											<a><span>管理专区</span></a>
+										</li>
+									</div>
+									<div class="nav_se_r">
+										<ul>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/1/1">综合讨论</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/2/1">体验服</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/3/1">论坛快讯</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/4/1">DNF中医馆</a>
+											</li>
+										</ul>
+										<ul>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/5/1">客服·BUG&amp;服务器</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/6/1">TP安全复查</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/7/1">DNF手游筹备区</a>
+											</li>
+										</ul>
+										<ul>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/8/1">月光酒馆</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/9/1">灌水闲谈</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/10/1">奶粉SHOW</a>
+											</li>
+										</ul>
+										<ul>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/11/1">论坛事务</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/12/1">非工作人员禁入</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/13/1">赛丽亚的小黑屋</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="nv1_tab">
+								<a class="a" href="#" hidefocus="true" title="荣耀殿堂">
+									<span>荣耀殿堂</span>
+								</a>
+							</div>
+							<div class="nv1_tab">
+								<a class="a" href="#" hidefocus="true" title="积分商城">
+									<span>积分商城</span>
+								</a>
+							</div>
+							<div class="nv1_tab">
+								<a class="a" href="#" hidefocus="true" title="实名认证">
+									<span>实名认证</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--登录显示-->
+				<!--user为空的话-->
+				<div class="login" th:if="${session.user} == null">
+					<a class="aclogin" href="/login">登录</a>
+					<a class="acsign" href="/register">注册</a>
+				</div>
+
+				<!--user不为空的话-->
+				<div class="user" th:if="${session.user} != null">
+						<span class="user_info">
+							<!--头像-->
+							<a class="avar" href="/user/headphoto" target="_blank">
+								<img th:src="@{'/img/upload/'+${session.user.headphoto}}">
+							</a>
+							<div class="hd_prompt"></div>
+							<!--个人列表list-->
+							<div class="info">
+								<a href="/user/info" style="margin-top:10px;" target="_blank" title="访问我的空间">
+									<b th:text="${session.user.phone}">手机号码</b>
+								</a>
+
+
+								<a class="usgroup" href="/user/points">
+									<label>无色小晶体</label>
+								</a>
+
+								<div class="head_hr"></div>
+
+								<a href="#">每日签到</a>
+								<div class="head_hr"></div>
+								<a href="#" >消息中心</a>
+								<a href="/user/info">个人中心</a>
+								<a th:href="@{'/user/antherPosts/'+${session.user.uid}}">我的帖子</a>
+								<!--<a href="#">我的收藏</a>-->
+								<a class="logout" href="javascript:;" onclick="loginout()">退出登陆</a>
+							</div>
+						</span>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<!--空白部分-->
+	<div class="space_white">
+
+	</div>
+		<!--帖子列表部分-->
+		<div class="posts" >
+			<!--当前所在位置 + 页码-->
+			<div class="this_location_pages cl">
+				<div class="z">
+					<a href="#" class="nvhm" title="首页">地下城与勇士官方论坛</a>
+					<em>»</em>
+					<a href="#">论坛</a>
+					<em>›</em>
+					<a href="#">游戏讨论</a>
+					<em>›</em>
+					<a href="#">综合讨论</a>
+					<em>›</em>
+					 职业圈
+				</div>
+				<div class="pages">
+					<span id="page_btn">
+						<div class="pg">
+							<a href="#" class="prev">上一页</a>
+							<strong>1</strong>
+							<a href="#">2</a>
+							<a href="#">3</a>
+							<a href="#">4</a>
+							<a href="#">5</a>
+							<a href="#" class="last">... 54</a>
+							<a href="#" class="nxt">下一页</a>
+						</div>
+					</span>
+				</div>
+			</div>
+			
+			<!--帖子详细信息-->
+			<div class="info_body">
+				<!--左边帖子-->
+				<div class="post_list">
+					
+					<!--主题帖内容 第一楼-->
+					<div class="ptb">
+						<table class="plhin" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="pls" rowspan="2">
+									<div class="pls" >
+										<!--头像-->
+										<div class="avatar">
+											<a th:href="@{'/user/viewothers/'+${readPost.themePost.author.uid}}" class="avtm" target="_blank">
+												<img th:src="@{'/img/upload/'+${readPost.themePost.author.headphoto}}">
+											</a>
+										</div>
+										<!--昵称-->
+										<div class="xyjf">
+											<div class="authi"><a th:href="@{'/user/viewothers/'+${readPost.themePost.author.uid}}" target="_blank" class="xw1" th:text="${readPost.themePost.author.nickname}">作者名</a>
+											</div>
+										</div>
+										
+										<!--作者用户帖子信息-->
+										<div class="tns xg2">
+											<table cellspacing="0" cellpadding="0">
+												<tbody>
+													<tr>
+														<th>
+															<p>
+																<a href="javascript:;" class="xi2">246</a>
+															</p>主题
+														</th>
+														<th>
+															<p>
+																<a href="javascript:;" class="xi2">
+																	<span title="50309">5万</span>
+																</a>
+															</p>帖子
+													 	</th>
+													 	<td>
+													 		<p>
+													 			<a href="javascript:;" class="xi2">
+													 				<span title="91114">9万</span>
+													 			</a>
+													 		</p>经验值
+													 	</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										
+										<!--用户的分组-->
+										<p>
+											<a href="javascript:;" target="_blank">
+												<img th:if="${readPost.themePost.author.role} eq 1" src="/img/role/0.gif"  class="vm">
+												<img th:if="${readPost.themePost.author.role} eq 2" src="/img/role/1.gif"  class="vm">
+												<img th:if="${readPost.themePost.author.role} eq 3" src="/img/role/2.gif"  class="vm">
+											</a>
+										</p>
+										
+										<!--用户的个性签名-->
+										<p class="xg1" th:text="${readPost.themePost.author.signature}">用户的个性签名</p>
+										
+										<!--用户的徽章展示-->
+										<p >
+											<a href="/badge">
+												<!--徽章-->
+												<img th:each="badge:${readPost.themePost.author.badges}" th:src="@{'/img/badge/'+${badge.badgeurl}}" th:alt="${badge.badgeurl}" th:title="${badge.badgeinfo}">
+											</a>
+										</p>
+									</div>
+								</td>
+								
+								<!--帖子内容-->
+								<td class="plc themepost" colspan="3">
+									<!--帖子标题-->
+									<table cellspacing="0" class="post_neirong">
+										<tr>
+											<td class="this_post_title">
+												<h1 class="ts">
+													[<a href="#" th:text="${readPost.themePost.type.tname}">[帖子类型]</a>]
+													<span th:text="${readPost.themePost.title}">帖子标题</span>
+                                                    <span class="xg1">
+                                                        &nbsp;<img th:if="${readPost.themePost.pcase eq 3}" src="/img/post/hot.gif" alt="" title="热度">
+                                                    </span>
+												</h1>
+												<span th:if="${session.user}" style="float: right">
+													<!--只有版主可见-->
+													<a th:if="${session.user.role eq 3}" class="layui-btn layui-btn-sm" th:attr="pid=${readPost.themePost.pid}" href="javascript:;" id="set-good">
+														加精
+													</a>
+													<a th:if="${session.user.role eq 3}" class="layui-btn layui-btn-sm" th:attr="pid=${readPost.themePost.pid}" href="javascript:;" id="set-top">
+														置顶
+													</a>
+													<a th:if="${session.user.role eq 3}" class="layui-btn layui-btn-sm" th:attr="pid=${readPost.themePost.pid}" href="javascript:;" id="set-hot">
+														设置热帖
+													</a>
+												</span>
+											</td>
+										</tr>
+										
+									</table>
+									
+									<hr class="hr" />
+									
+									<!--帖子具体内容-->
+									<div class="pct pcb">
+										<div class="t_fsz" th:utext="${readPost.themePost.content}">
+											内容...
+										</div>
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td class="plsz" style="border: 0;"></td>
+								<td></td>
+								<td class="plc" style="overflow:visible;" colspan="2">
+									<div class="ffb">
+									<div class="bk_b">
+										<a class="ys_tx z" href="#">
+											<span>召唤策划</span>
+										</a>
+
+									</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				
+					<!--回复贴-->
+					<div class="ptb" th:each="replypost : ${readPost.replyPosts}">
+						<table class="plhin" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="pls" rowspan="2">
+									<div class="pls" >
+										<!--头像-->
+										<div class="avatar">
+											<a th:href="@{'/user/viewothers/'+${replypost.replyer.uid}}" class="avtm" target="_blank">
+												<img th:src="@{'/img/upload/'+${replypost.replyer.headphoto}}">
+											</a>
+										</div>
+										<!--昵称-->
+										<div class="xyjf">
+											<div class="authi"><a th:href="@{'/user/viewothers/'+${replypost.replyer.uid}}" target="_blank" class="xw1" th:text="${replypost.replyer.nickname}">回复者名称</a>
+											</div>
+										</div>
+										
+										<!--用户帖子信息-->
+										<div class="tns xg2">
+											<table cellspacing="0" cellpadding="0">
+												<tbody>
+													<tr>
+														<th>
+															<p>
+																<a href="#" class="xi2">246</a>
+															</p>主题
+														</th>
+														<th>
+															<p>
+																<a href="#" class="xi2">
+																	<span title="50309">5万</span>
+																</a>
+															</p>帖子
+													 	</th>
+													 	<td>
+													 		<p>
+													 			<a href="#" class="xi2">
+													 				<span title="91114">9万</span>
+													 			</a>
+													 		</p>经验值
+													 	</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										
+										
+										
+										<!--用户的分组-->
+										<p>
+											<a href="#" target="_blank">
+												<img th:if="${replypost.replyer.role eq 1}" src="/img/role/0.gif"  class="vm">
+												<img th:if="${replypost.replyer.role eq 2}" src="/img/role/1.gif"  class="vm">
+												<img th:if="${replypost.replyer.role eq 3}" src="/img/role/2.gif"  class="vm">
+											</a>
+										</p>
+										
+										<!--用户的个性签名-->
+										<p class="xg1" th:text="${replypost.replyer.signature}">用户的个性签名</p>
+										
+										<!--用户的徽章展示-->
+										<p >
+											<a href="/badge">
+												<!--徽章-->
+												<img th:each="badge:${replypost.replyer.badges}" th:src="@{'/img/badge/'+${badge.badgeurl}}" th:alt="${badge.badgeurl}" th:title="${badge.badgeinfo}">
+											</a>
+										</p>
+									</div>
+								</td>
+								
+								<!--帖子内容-->
+								<td class="plc themepost" colspan="3">
+									<!--帖子标题-->
+									<table cellspacing="0"  class="post_neirong">
+										<tr>
+											<td class="this_replypost">
+												<img class="authicn vm"  src="/img/post/online_member.png">
+												<em class="replytime" th:text="'发表于 '+${replypost.replytime}">发表于 2019-4-2 17:20:11</em>
+											</td>
+										</tr>
+										
+									</table>
+									
+									<hr class="hr" />
+									
+									<!--帖子具体内容-->
+									<div class="pct pcb">
+										<div class="t_fsz">
+											<!--回复别人的-->
+											<!--<div class="reply_reply_content">
+												<div class="repley_last">
+													<font size="2">
+														<a href="#" target="_blank" class="reply_h">
+															<font color="#999999">若水轻尘ㄟ 发表于 2019-4-2 17:57</font>
+														</a>
+													</font>
+													<br />
+													超时空相关问题我们已经上报了呢，等修复吧
+												</div>
+											</div>-->
+											<div th:utext="${replypost.content}">
+												回复内容
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td class="plsz" style="border: 0;"></td>
+								<td></td>
+								<td class="plsa" style="overflow:visible;" colspan="2">
+									
+								
+									<div class="pob cl y">
+										<em>
+											<a href="#" >已点赞 (<span>0</span>)</a>
+											
+											<a href="javascript:;" th:attr="replyuid=${replypost.replyer.uid},rpid=${replypost.rpid}" class="replay-show">回复</a>
+										</em>
+										
+										<em>
+											<a href="javascript:;"  class="showmenu" style="display: none;"></a>
+											<a href="javascript:;">评分</a>
+											<a href="javascript:;">举报</a>
+										</em>
+										
+									</div>
+								
+								</td>
+							</tr>
+							
+							<!--他人的回复评论-->
+							<tr class="other_reply_under" th:each="reply : ${replypost.replyPosts}">
+								<td></td>
+								<td colspan="3" class="qthf">
+									<div>
+										<!--头像-->
+										<a href="#" class="reply_face">
+											<img th:src="@{'/img/upload/'+${reply.replyer.headphoto}}" />
+										</a>
+										<!--回复人昵称 + 内容-->
+										<div class="reply-con">
+											<a th:href="@{'/user/viewothers/'+${reply.replyer.uid}}" class="reply-user" th:text="${reply.replyer.nickname}">Poi</a>
+											<span class="maohao">：</span>
+											<span class="text-con" th:utext="${reply.content}">回复内容</span>
+										</div>
+										<!--回复帖子的时间 点赞数-->
+										<div class="reply-info  ">
+											<span class="reply-time" th:text="${reply.replytime}">2019-04-08 21:08</span>
+											<!--liked 标识已经点过赞  glike 标识未点赞-->
+											<span class="reply-like glike"><i></i><span th:text="${reply.replylike}">6</span></span>
+											<span class="reply-btn" th:attr="replyname=${reply.replyer.nickname},replyuid=${reply.replyer.uid},rpid=${reply.rpid}">回复</span>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<!--回复其他人-->
+							<tr class="other_reply_under hf yc">
+								<td></td>
+								<td colspan="3">
+
+										<!--回复其他人，一般隐藏-->
+										<div class="reply-write" th:if="${session.user}">
+											<!--左边的头像 当前登录人的头像-->
+											<div class="user-face">
+												<img class="user-head" th:src="@{'/img/upload/'+${session.user.headphoto}}">
+											</div>
+											<div class="textarea-container">
+												<div contentEditable="true" replyRpid="" class="div-text-area" >回复 @xxx :</div>
+												<button type="submit" class="comment-submit">发表评论</button>
+											</div>
+											<!--表情按钮-->
+											<div class="comment-emoji">
+												<i class="face"></i><span class="text">表情</span>
+											</div>
+											<!--表情内容-->
+											<div class="emoji-box yc">
+												<div class="emoji-title"><span>2233娘表情</span></div>
+												<div class="emoji-wrap">
+													<a class="emoji">
+														<img src="/img/bilibili/d委屈.png" title="[委屈]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/卖萌.png" title="[卖萌]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/吃惊.png" title="[吃惊]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/吐魂.png" title="[吐魂]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/困惑.png" title="[困惑]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/大哭.png" title="[大哭]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/大笑.png" title="[大笑]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/尴尬.png" title="[尴尬]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/怒.png" title="[怒]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/无言.png" title="[无言]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/汗.png" title="[汗]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/疑问.png" title="[疑问]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/第一.png" title="[第一]">
+													</a>
+													<a class="emoji">
+														<img src="/img/bilibili/耶.png" title="[耶]">
+													</a>
+												</div>
+											</div>
+										</div>
+								</td>
+							</tr>
+							
+							<!--空白-->
+							<tr class="kb">
+								<td></td>
+								<td colspan="3" ></td>
+							</tr>
+							
+						</table>
+					</div>
+				
+					<div class="ptb">
+
+						<a href="javascript:;" class="acpost" id="newreply"  title="发新帖">发新帖</a>
+					</div>
+				
+				
+				</div>
+			
+			
+				<!--右边详细-->
+				<div class="rtscroll y">
+					<div class="vbox">
+						<!--头部-->
+						<div class="vbox_h">
+							<ul>
+								<li><div th:text="${readPost.themePost.visits}">0</div><p>浏览</p></li>
+								<li><div th:text="${readPost.themePost.replynum}">0</div><p>评论</p></li>
+								<li><div th:text="${readPost.themePost.callnum}">0</div><p>召唤策划</p></li>
+							</ul>
+						</div>
+						
+						<!--召唤策划 返回列表-->
+						<div class="vbox_b">
+							<div class="two_btn">
+								<a  class="ys_tx z" href="#"  title="顶一下">
+									<span>召唤策划</span>
+								</a>
+								<a class="ys_fh y" href="#">
+									<span>返回列表</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		
+		</div>
+		
+		<div class="cl"></div>
+		
+		<!--底部-->
+		<div class="footer">
+			<div class="footer_top">
+				
+				<footer class="bbs">
+					<ul>
+						<li><a href="//game.qq.com/portal2010/about.htm" target="_blank">腾讯互动娱乐 <span>|</span> </a></li>
+						<li><a href="//game.qq.com/contract.shtml" target="_blank">服务条款 <span>|</span> </a></li>
+						<li><a href="//adver.qq.com" target="_blank">广告服务 <span>|</span> </a></li>
+						<li><a href="//game.qq.com/hr/" target="_blank">腾讯游戏招聘 <span>|</span> </a></li>
+						<li><a href="//game.qq.com/gnav/" target="_blank">腾讯游戏地图 <span>|</span> </a></li>
+						<li><a href="//tgact.qq.com" target="_blank">游戏活动 <span>|</span> </a></li>
+						<li><a href="//game.qq.com/brand/bd" target="_blank">商务合作 <span>|</span> </a></li>
+						<li><a href="//www.qq.com/map" target="_blank">网址导航&nbsp;</a></li>
+					</ul>
+					<p>Copyright © 1998 - 2016 Tencent. All Rights Reserved</p>
+				</footer>
+				
+				<div class="footbtm"></div>
+			</div>
+		</div>
+	</body>
+	
+	<script type="text/javascript" th:src="@{/js/jquery-1.8.3.js}" ></script>
+
+	<!-- 富文本 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+	<script type="text/javascript" th:src="@{/js/wangEditor.min.js}"></script>
+
+	<script  th:inline="javascript">
+		
+		//用于记录表情框是否在隐藏状态 0隐藏 1显示
+		var emoji_yc = 0;
+
+        var editor1 ;
+
+		var login = [[${session.user}]]
+
+		$(".reply-btn").click(function(){
+            //被回复人的昵称
+            var name= $(this).attr("replyname");
+            //被回复人的id
+            var uid=$(this).attr("replyuid");
+            //被回复帖子的rpid
+            var rpid=$(this).attr("rpid");
+
+            var index = $(this).parents(".ptb").index();
+            //其他回复隐藏
+            $(".hf").addClass("yc").eq(index-1).removeClass("yc").find(".div-text-area").html("回复<a href='/user/viewothers/"+uid+"' class='reply-user at'>@"+name+"</a>:").next().attr("rpid",rpid);
+        });
+
+		$(".replay-show").click(function () {
+
+            //被回复帖子的rpid
+            var rpid=$(this).attr("rpid");
+
+            var index = $(this).parents(".ptb").index();
+
+            $(".hf").addClass("yc").eq(index-1).removeClass("yc").find(".div-text-area").html("").next().attr("rpid",rpid);
+
+        })
+		
+		$(".comment-emoji").click(function(){
+			
+				//获取当前元素的x值
+				var top = $(this).offset().top;
+				var left = $(this).offset().left ;
+				//设置表情框所在的位置
+				$(this).next().removeClass("yc").css({"top":top+22,"left":left});
+				emoji_yc = 1;
+			 
+			
+		})
+		
+		$(function(){
+	        $(document).bind("click",function(e){
+	            //当点击表情框 或者 表情按钮 以外则隐藏表情框           
+	            if($(e.target).closest(".emoji-box").length == 0 && $(e.target).closest(".comment-emoji").length == 0){
+					if(emoji_yc == 1){
+						//隐藏表情
+						$(".emoji-box").addClass("yc");
+					}
+	            }
+	        })
+	   })
+		
+		$(".emoji").click(function(){
+			//获取点击图像的src值
+			var src = $(this).children("img").attr("src");
+			var val = $(".hf").val()+"<img src=\""+src+"\"/>";
+			//在div中显示
+			$(this).parents(".reply-write").find(".div-text-area").append(val);
+		})
+
+        function getNowFormatDate() {//获取当前时间
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1<10? "0"+(date.getMonth() + 1):date.getMonth() + 1;
+            var strDate = date.getDate()<10? "0" + date.getDate():date.getDate();
+            var currentdate = date.getFullYear() + seperator1  + month  + seperator1  + strDate
+                + " "  + date.getHours()  + seperator2  + date.getMinutes()
+                + seperator2 + date.getSeconds();
+            return currentdate;
+        }
+
+		//回复
+		$(".comment-submit").click(function () {
+		    //获得回复内容
+			var replyContent = $(this).prev().html();
+
+            var parent = $(this).parents(".other_reply_under");
+
+
+			if (replyContent == '') {
+			    layer.msg("回复内容不能为空！");
+			}else{
+			    //回复人的id
+                var rpid = $(this).attr("rpid");
+
+                //获得当前用户的id
+                var loginuser = [[${session.user}]];
+
+				if (loginuser==null){
+                    layer.msg("请先登录后在评论");
+				}else{
+				    //异步提交回复
+                    $.ajax({
+                        type:"GET",
+                        url:"/reply/addreply",
+						data:{uid:loginuser.uid,pid:[[${readPost.themePost.pid}]],to_rpid:rpid,content:replyContent},
+                        dataType:"json",
+                        success:function(data) {
+                            layer.msg(data['msg']);
+                            //在当前位置插入评论的内容  待做
+							var addhtml='<tr class="other_reply_under"><td></td><td colspan="3" class="qthf"><div><a href="#" class="reply_face"><img src="/img/upload/'+loginuser.headphoto+'" /></a>'+
+									'<div class="reply-con"><a href="/user/find/'+loginuser.uid+'" class="reply-user">'+loginuser.nickname+'</a> <span class="maohao">：</span><span class="text-con">'+replyContent+'</span></div><div class="reply-info  "><span class="reply-time">'+getNowFormatDate()+'</span>'
+									+'<span class="reply-like glike"><i></i><span>0</span></span> <span class="reply-btn"  replyname="'+loginuser.nickname+'" replyuid="'+loginuser.uid+'" rpid="'+data['rpid']+'">回复</span></div></div></td></tr>';
+                            parent.before(addhtml);
+                        }
+                    });
+				}
+			}
+
+        })
+
+
+
+		//回复主题帖
+		$("#newreply").click(function () {
+            if (login == null){
+                layer.msg("请登录后再发帖！");
+            }else{
+                layer.open({
+                    type:1,
+                    title:"回复主题帖",
+                    content:'<div id="editor" class="editor-reply"><div class="newpost_title"> <img style="border-radius: 50%;  width: 55px;  height: 55px;" src="/img/upload/'+login.headphoto+'"/> </div><div class="editor_h" id="editor_h"></div><div class="editor_f"></div><div class="editor_b" id="editor_b"></div></div><button class="report-post" onclick="replyThemePost()">发表</button>',
+                    area: ['600px', '650px'],
+                    offset: 'auto',
+                    closeBtn:2,
+                    shade:0.8,
+                    shadeClose:true,
+                    resize:false
+                });
+            }
+            creatFWB();
+        })
+
+        //创建富文本
+        function creatFWB(){
+            var E = window.wangEditor;
+            // 或者 var editor = new E( document.getElementById('editor') )
+            editor1 = new E('#editor_h', '#editor_b')  // 两个参数也可以传入 elem 对象，class 选择器
+            editor1.customConfig.menus = [
+                'head', // 标题
+                'bold',// 粗体
+                'fontSize', // 字号
+                'underline',// 下划线
+                'foreColor',// 文字颜色
+                'link',  // 插入链接
+                'quote',  // 引用
+                'emoticon',  // 表情
+                'image',  // 插入图片
+                'video',  // 插入视频
+            ];
+            editor1.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+            //当前项目的地址
+            	var addr = '/';
+
+                /*配置表情*/
+                editor1.customConfig.emotions = [
+                    {
+                        // tab 的标题
+                        title: '默认',
+                        // type -> 'emoji' / 'image'
+                        type: 'image',
+                        // content -> 数组
+                        content: [
+                            {
+                                alt: '[委屈]',
+                                src: addr + 'img/bilibili/d委屈.png'
+                            },
+                            {
+                                alt: '[吃惊]',
+                                src: addr + 'img/bilibili/吃惊.png'
+                            },
+                            {
+                                alt: '[大哭]',
+                                src: addr + 'img/bilibili/大哭.png'
+                            },
+                            {
+                                alt: '[大笑]',
+                                src: addr + 'img/bilibili/大笑.png'
+                            },
+                            {
+                                alt: '[第一]',
+                                src: addr + 'img/bilibili/第一.png'
+                            },
+                            {
+                                alt: '[汗]',
+                                src: addr + 'img/bilibili/汗.png'
+                            },
+                            {
+                                alt: '[喝水]',
+                                src: addr + 'img/bilibili/喝水.png'
+                            },
+                            {
+                                alt: '[困惑]',
+                                src: addr + 'img/bilibili/困惑.png'
+                            },
+                            {
+                                alt: '[卖萌]',
+                                src: addr + 'img/bilibili/卖萌.png'
+                            },
+                            {
+                                alt: '[怒]',
+                                src: addr + 'img/bilibili/怒.png'
+                            },
+                            {
+                                alt: '[吐魂]',
+                                src: addr + 'img/bilibili/吐魂.png'
+                            },
+                            {
+                                alt: '[无言]',
+                                src: addr + 'img/bilibili/无言.png'
+                            },
+                            {
+                                alt: '[耶]',
+                                src: addr + 'img/bilibili/耶.png'
+                            },
+                            {
+                                alt: '[疑问]',
+                                src: addr + 'img/bilibili/疑问.png'
+                            },
+                            {
+                                alt: '[尴尬]',
+                                src: addr + 'img/bilibili/尴尬.png'
+                            }
+                        ]
+                    }
+                ]
+                editor1.create();
+
+		}
+		
+		//回复主题帖
+		function replyThemePost() {
+
+            //获取发表帖子的内容
+            var this_content = editor1.txt.html();
+			//获得当前用户的id
+			var this_uid = login.uid;
+			var this_pid = [[${readPost.themePost.pid}]];
+
+            //异步提交回复
+            $.ajax({
+                type:"GET",
+                url:"/reply/addreply",
+                data:{uid:this_uid,pid:this_pid,to_rpid:0,content:this_content},
+                dataType:"json",
+                success:function(data) {
+                    layer.msg(data['msg'],{icon: 1,time: 1000});
+
+                    setTimeout(function(){
+                        window.location.href = "/themepost/readpost/"+this_pid;
+                    },1000);
+                }
+            });
+
+
+        }
+        
+        $("#set-good").click(function () {
+			var pid = $(this).attr("pid");
+            $.ajax({
+                type: "POST",
+                dataType: "text",
+                url: "/themepost/setGood/"+pid,
+                success: function(data){
+                    layer.msg(data,{icon: 1,time: 1000});
+                }
+            });
+        })
+
+        $("#set-hot").click(function () {
+            var pid = $(this).attr("pid");
+            $.ajax({
+                type: "POST",
+                dataType: "text",
+                url: "/themepost/setHot/"+pid,
+                success: function(data){
+                    layer.msg(data,{icon: 1,time: 1000});
+                }
+            });
+        })
+
+        $("#set-top").click(function () {
+            var pid = $(this).attr("pid");
+            $.ajax({
+                type: "POST",
+                dataType: "text",
+                url: "/themepost/setTop/"+pid,
+                success: function(data){
+                    layer.msg(data,{icon: 1,time: 1000});
+                }
+            });
+        })
+
+        function loginout(){
+            $.ajax({
+                type: "POST",
+                dataType: "text",
+                url: "/user/loginout",
+                success: function(data){
+
+                    layer.msg(data,{icon: 1,time: 1000});
+                    setTimeout(function(){
+                        window.location.href = "/index";
+                    },1000);
+                }
+            });
+        }
+
+	</script>
+</html>

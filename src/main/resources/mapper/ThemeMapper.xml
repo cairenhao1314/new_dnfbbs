@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.game.dnf.mapper.ThemeMapper">
+
+    <select id="queryAllTheme" resultType="Theme">
+        select * from dnf_theme
+    </select>
+
+    <select id="queryThemeById" resultType="Theme" parameterType="int">
+        select * from dnf_theme where tmid = #{tmid}
+    </select>
+
+    <insert id="insertTheme" parameterType="Theme">
+        insert into dnf_theme values(null,#{tmname})
+    </insert>
+
+    <update id="updateTheme" parameterType="Theme">
+        update dnf_theme set tmname=#{tmname}
+        where tmid = #{tmid}
+    </update>
+
+</mapper>

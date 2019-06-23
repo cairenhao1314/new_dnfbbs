@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DNF游戏论坛注册</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/css/reg.css}">
+
+    <link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+</head>
+<body>
+<div id="ajax-hook"></div>
+<div class="wrap" style="background-size: 100%;background-position: 0px 0px;">
+    <div class="wpn">
+        <div class="form-data pos">
+            <a href=""><img th:src="@{/img/logo.png}" class="head-logo"></a>
+            <form action="/user/register" method="post">
+                <p class="p-input pos">
+                    <label for="tel">手机号</label>
+                    <input type="number" id="tel" autocomplete="off" name="phone">
+                    <span class="tel-warn tel-err hide"><em></em><i class="icon-warn"></i></span>
+                </p>
+
+                <p class="p-input pos" style="display: none;" id="checkphone"></p>
+
+
+                <p class="p-input pos" id="pwd">
+                    <label for="passport">输入密码</label>
+                    <input type="password" id="passport" name="pwd" >
+                    <span class="tel-warn pwd-err hide"><em></em><i class="icon-warn" style="margin-left: 5px"></i></span>
+                </p>
+
+                <p class="p-input pos" style="display: none;" id="thispwd"></p>
+
+                <p class="p-input pos" id="confirmpwd">
+                    <label for="passport2">确认密码</label>
+                    <input type="password" id="passport2">
+                    <span class="tel-warn confirmpwd-err hide"><em></em><i class="icon-warn" style="margin-left: 5px"></i></span>
+                </p>
+
+                <p class="p-input pos" style="display: none;" id="checkpwd"></p>
+
+                <p class="p-input pos">
+                    <label for="passport2">邮箱</label>
+                    <input type="email" name="email">
+                    <span class="tel-warn confirmpwd-err hide"><em></em><i class="icon-warn" style="margin-left: 5px"></i></span>
+                </p>
+
+                <p class="p-input pos">
+                    <label for="passport2">昵称</label>
+                    <input type="text" name="nickname">
+                    <span class="tel-warn confirmpwd-err hide"><em></em><i class="icon-warn" style="margin-left: 5px"></i></span>
+                </p>
+
+                <button class="lang-btn">注册</button>
+                <div class="bottom-info">已有账号，<a href="login">马上登录</a></div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/jquery-1.8.3.js}"></script>
+<script th:src="@{/js/agree.js}"></script>
+<script>
+    $("#tel").blur(function () {
+        var phone = this.value;
+        $.ajax({
+            //请求方式
+            type:'POST',
+            //发送请求的地址
+            url:'isUsedPhone',
+            //服务器返回的数据类型
+            dataType:'json',
+            //发送到服务器的数据，对象必须为key/value的格式，jquery会自动转换为字符串格式
+            data:{phone:phone},
+            success:function(data){
+                //请求成功函数内容
+                if (!data){
+                    $("#checkphone").html("<label style='color: red;font-size: 16px;'>×手机号码已经被使用</label>");
+                    $("#checkphone").attr("style","border-bottom:none; display:block;");
+                }else{
+                    $("#checkphone").html("");
+                    $("#checkphone").attr("style","display:none;");
+                }
+
+            },
+            error:function(jqXHR){
+                //请求失败函数内容
+                alert("出现了未知错误！");
+            }
+        });
+    })
+
+
+    $("#passport").blur(function () {
+        var value = this.value;
+        isPasswd(value);
+    })
+
+    $("#passport2").blur(function () {
+        var val1 = $("#passport").val();
+        var val2 = this.value;
+        isTheSamePassword(val1,val2);
+    })
+
+    //判断两次密码是否一致
+    function isTheSamePassword(val1,val2) {
+        if (val1 == val2){
+            checkPwd = true;
+            $("#checkpwd").html("");
+            $("#checkpwd").attr("style","border-bottom:none; display:none;");
+        } else if(val2 == ""){
+            checkPwd = false;
+            $("#checkpwd").html("");
+            $("#checkpwd").attr("style","border-bottom:none; display:none;");
+        }else{
+            $("#checkpwd").html("<label style='color: red;font-size: 16px;'>×两次密码不一致</label>");
+            $("#checkpwd").attr("style","border-bottom:none; display:block;");
+        }
+    }
+
+    //校验密码：只能输入6-20个字母、数字、下划线
+    function isPasswd(s)
+    {
+        var patrn=/^(\w){6,20}$/;
+        if (!patrn.exec(s)){
+            $("#thispwd").html("<label style='color: red;font-size: 16px;'>×只能输入6-20个字母、数字、下划线</label>");
+            $("#thispwd").attr("style","border-bottom:none; display:block;");
+        }else{
+            $("#thispwd").html("");
+            $("#thispwd").attr("style","display:none;");
+        }
+
+        var val1 = $("#passport").val();
+        var val2 =  $("#passport2").val();
+        isTheSamePassword(val1,val2);
+    }
+</script>
+</body>
+</html>

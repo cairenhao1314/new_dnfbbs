@@ -1,0 +1,159 @@
+.person-info {
+	width: auto;
+	min-height: 300px;
+	background: rgba(255, 255, 255, 1);
+	border-radius: 15px;
+	margin: 0 auto;
+	border: 1px solid #CCC;
+}
+
+.info-left {
+	float: left;
+	overflow: hidden;
+	margin-bottom: 10px;
+	padding: 6px 10px;
+	width: 117px;
+}
+
+.info-sz {
+	border-bottom: 1px dashed #CDCDCD;
+	padding: 10px;
+	font-size: 16px;
+}
+
+.info-left li {
+	margin: 0 10px;
+	height: 33px;
+	border-bottom: 1px dashed #CCC;
+	display: block;
+	line-height: 28px;
+	white-space: nowrap;
+	word-wrap: normal;
+	font-size: 14px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.info-right {
+	width: 1000px;
+	display: inline;
+	margin-right: 10px;
+	padding-top: 10px;
+	float: right;
+	overflow: hidden;
+}
+
+.info-right-top {
+	width: 95%;
+	margin-top: 3px;
+	padding-left: 5px;
+	line-height: 30px;
+	border-bottom: 1px solid #CDCDCD;
+	float: left;
+}
+
+.info-right-top a {
+	border-bottom-color: #FFF;
+	background: #FFF;
+	font-weight: 700;
+	display: block;
+	width: 50px;
+	padding: 0 10px;
+	border: 1px solid #CDCDCD;
+	border-bottom: none;
+}
+
+.info-tab {
+	width: 100%;
+}
+
+.info-tab th {
+	padding-top: 9px;
+	padding-right: 5px;
+	width: 130px;
+	padding: 7px 0;
+	text-align: left;
+	font-weight: 400;
+}
+
+.info-head {
+	width: 80px;
+	height: 80px;
+	border: 1px solid #fff;
+	border-radius: 100%;
+	position: relative;
+}
+
+.info-head img,
+.info-head input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+}
+
+.info-head input:hover,
+.info-head img:hover {
+	cursor: pointer;
+}
+
+.info-head input {
+	opacity: 0;
+	z-index: 100;
+}
+
+.info-head img {
+	background-color: #ececec;
+}
+
+.info-head-sub{
+	display: inline-block;
+    outline: 0;
+    resize: none;
+    border: 0;
+    padding: 5px 10px;
+    background: #8c85e6;
+    color: #fff;
+    border: solid 1px #8c85e6;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+
+.info-jf li.jf {
+    float: left;
+    margin-right: 5px;
+    margin-top: 10px;
+    width: 24%;
+    height: 30px;
+}
+
+.info-jf li em {
+    font-weight: 700;
+}
+
+.jf-gold{
+	clear: both;
+    float: none;
+    width: auto;
+    color: #F26C4F;
+}
+
+.jf-span{
+	    color: #999 !important;
+}
+
+.jf-span u{
+	text-decoration: none;
+}
+
+.jf-exp{
+    float: left;
+    margin-right: 5px;
+    margin-top: 10px;
+    width: 70%;
+    height: 30px;
+}

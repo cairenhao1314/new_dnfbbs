@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.game.dnf.mapper.ReplyPostMapper">
+
+    <resultMap id="newReplyPost" type="ReplyPost">
+        <id column="rpid" property="rpid"/>
+        <result column="content" property="content"/>
+        <result column="replytime" property="replytime"/>
+        <result column="replystatus" property="replystatus"/>
+        <result column="replylike" property="replylike"/>
+        <association property="replyer" column="uid" select="com.game.dnf.mapper.UserMapper.getNewUser"/>
+        <collection property="replyPosts" javaType="ArrayList" ofType="com.game.dnf.pojo.ReplyPost" column="rpid" select="getAllReplyPostByRpid"/>
+    </resultMap>
+
+    <select id="getAllReplyPostByPid" resultMap="newReplyPost">
+        select * from dnf_reply_post where pid=#{pid} and to_rpid=0
+    </select>
+
+    <select id="getAllReplyPostByRpid" resultMap="newReplyPost">
+        select * from dnf_reply_post where to_rpid=#{rpid}
+    </select>
+
+    <insert id="insertNewAddReply" parameterType="AddReply" useGeneratedKeys="true" keyProperty="rpid">
+        insert into dnf_reply_post values (null,#{uid},#{pid},#{to_rpid},#{content},now(),0,0)
+    </insert>
+
+</mapper>

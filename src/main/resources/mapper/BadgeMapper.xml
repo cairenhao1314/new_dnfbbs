@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.game.dnf.mapper.BadgeMapper">
+
+
+    <select id="getUserBadges" parameterType="int" resultType="Badge">
+        select  d1.bid,d2.badgeurl,d2.badgeinfo from dnf_user_badge d1,dnf_badge d2 where uid = #{uid} and  d1.bid = d2.bid
+    </select>
+
+    <select id="insertUserNewBadge" parameterType="map" >
+        insert into dnf_user_badge values(null,#{uid},#{bid})
+    </select>
+
+    <select id="allBadges" resultType="Badge">
+        select * from dnf_badge
+    </select>
+
+    <select id="isHavingBadge" resultType="int" >
+        select count(*) from dnf_user_badge where uid=#{uid} and bid = #{bid}
+    </select>
+</mapper>

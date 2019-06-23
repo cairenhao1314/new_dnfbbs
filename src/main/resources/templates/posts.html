@@ -1,0 +1,657 @@
+<!DOCTYPE >
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>地下城与勇士官方论坛</title>
+		<link rel="stylesheet" th:href="@{/css/dnf_index.css}" />
+		<link rel="stylesheet" th:href="@{/css/common_style.css}" />
+		<link rel="stylesheet" th:href="@{/css/posts.css}" />
+
+		<!--引入layui css+ js-->
+		<link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+		<script type="text/javascript" th:src="@{/layui/layui.all.js}"></script>
+
+        <!--引入转换日期的js文件-->
+        <script type="text/javascript" th:src="@{/js/diff-date.js}"></script>
+
+		<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+	</head>
+	
+	<body  class="dnf_index">
+
+	<div class="index_shadow">
+		<div class="index_shadow">
+			<div class="shadow_top">
+				<div class="choose_module">
+					<div class="headtop">
+						<a class="collect" href="javascript:;" title="收藏本站"></a>
+					</div>
+					<div class="row_top">
+						<div class="nv">
+							<div class="nv1">
+								<div class="nv1_tab">
+									<a class="a" href="/index" hidefocus="true" title="BBS">
+										<span>论坛首页</span>
+									</a>
+								</div>
+								<div class="nv1_tab cut">
+									<a class="a" hidefocus="true" title="切换版面">
+										<span>切换版块</span>
+									</a>
+									<!--隐藏的模块-->
+									<div class="nav_se">
+										<div class="nav_se_l">
+											<li>
+												<a>游戏讨论</a>
+											</li>
+											<li>
+												<a><span>官方专区</span></a>
+											</li>
+											<li>
+												<a><span>灌水闲谈</span></a>
+											</li>
+											<li>
+												<a><span>管理专区</span></a>
+											</li>
+										</div>
+										<div class="nav_se_r">
+											<ul>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/1/1">综合讨论</a>
+												</li>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/2/1">体验服</a>
+												</li>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/3/1">论坛快讯</a>
+												</li>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/4/1">DNF中医馆</a>
+												</li>
+											</ul>
+											<ul>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/5/1">客服·BUG&amp;服务器</a>
+												</li>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/6/1">TP安全复查</a>
+												</li>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/7/1">DNF手游筹备区</a>
+												</li>
+											</ul>
+											<ul>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/8/1">月光酒馆</a>
+												</li>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/9/1">灌水闲谈</a>
+												</li>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/10/1">奶粉SHOW</a>
+												</li>
+											</ul>
+											<ul>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/11/1">论坛事务</a>
+												</li>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/12/1">非工作人员禁入</a>
+												</li>
+												<li>
+													<a href="/themepost/loadThemePostsByPage/13/1">赛丽亚的小黑屋</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="nv1_tab">
+									<a class="a" href="#" hidefocus="true" title="荣耀殿堂">
+										<span>荣耀殿堂</span>
+									</a>
+								</div>
+								<div class="nv1_tab">
+									<a class="a" href="#" hidefocus="true" title="积分商城">
+										<span>积分商城</span>
+									</a>
+								</div>
+								<div class="nv1_tab">
+									<a class="a" href="#" hidefocus="true" title="实名认证">
+										<span>实名认证</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--登录显示-->
+					<!--user为空的话-->
+					<div class="login" th:if="${session.user} == null">
+						<a class="aclogin" href="/login">登录</a>
+						<a class="acsign" href="/register">注册</a>
+					</div>
+
+					<!--user不为空的话-->
+					<div class="user" th:if="${session.user} != null">
+						<span class="user_info">
+							<!--头像-->
+							<a class="avar" href="/user/headphoto" target="_blank">
+								<img th:src="@{'/img/upload/'+${session.user.headphoto}}">
+							</a>
+							<div class="hd_prompt"></div>
+							<!--个人列表list-->
+							<div class="info">
+								<a href="/user/info" style="margin-top:10px;" target="_blank" title="访问我的空间">
+									<b th:text="${session.user.phone}">手机号码</b>
+								</a>
+
+
+								<a class="usgroup" href="/user/points">
+									<label>无色小晶体</label>
+								</a>
+
+								<div class="head_hr"></div>
+
+								<a href="#">每日签到</a>
+								<div class="head_hr"></div>
+								<a href="#" >消息中心</a>
+								<a href="/user/info">个人中心</a>
+								<a th:href="@{'/user/antherPosts/'+${session.user.uid}}">我的帖子</a>
+								<!--<a href="#">我的收藏</a>-->
+								<a class="logout" href="javascript:;" onclick="loginout()">退出登陆</a>
+							</div>
+						</span>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+		<!--空白部分-->
+		<div class="space_white">
+
+		</div>
+
+		<!--帖子列表部分-->
+		<div class="posts">
+			<!--当前所在位置 + 页码-->
+			<div class="this_location_pages cl">
+				<div class="z">
+					<a href="/index" class="nvhm" title="首页">地下城与勇士官方论坛</a>
+					<em>»</em>
+					<a href="javascript:;">论坛</a>
+					<em>›</em>
+					<a href="javascript:;" th:text="${theme.getTmname()}">综合讨论</a>
+				</div>
+				<!--页数-->
+				<div class="pages" id="posts-page"></div>
+			</div>
+			
+			
+			<!--帖子详细部分-->
+			<div class="post_body">
+				<!--左边帖子部分-->
+				<div class="posts_body_left">
+					<!--上部详细查询条件  table-->
+					<div class="posts_table">
+						<table cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<th colspan="2">
+										<div class="query">
+											<a  class="showmenu" >全部主题</a>&nbsp;
+											<a  class="showmenu">全部类型</a>
+											<a  class="showmenu" >全部时间</a>&nbsp;
+											<a  class="showmenu" >默认排序</a>
+										</div>
+										<div class="tfst y">
+											<a href="#" class="xi2">最新</a>&nbsp;<span class="pipe">|</span>&nbsp;
+											<a href="#" class="xi2">热门</a>&nbsp;<span class="pipe">|</span>&nbsp;
+											<a href="#" class="xi2">热帖</a>&nbsp;<span class="pipe">|</span>&nbsp;
+											<a href="#" class="xi2">精华</a>&nbsp;
+											<span id="clearstickthread" style="display: none;">
+											<span class="pipe">|</span>
+											<a href="#"  class="xi2">显示置顶</a>
+											</span>
+										</div>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!--帖子列表-->
+					<div class="postlist">
+						<table cellspacing="0" cellpadding="0">
+							
+							<!--开始！-->
+							<tr th:each="post:${goodThemePosts}">
+								<th class="common">
+									<div class="author z">
+										<a href="#" class="faceimg">
+											<!--头像-->
+											<img th:src="@{'/img/upload/'+${post.author.headphoto}}">
+										</a>
+									</div>
+									<div class="frmc">
+										<em>[<a href="#" th:text="${post.type.tname}">帖子类型</a>]</em>
+										<div class="frmc_t">
+											<a class="z post_title" th:href="'/themepost/readpost/'+${post.pid}" style="font-weight: bold;color: #2897C5;" th:text="${post.title}">帖子标题</a>
+											<span class="dz_pt z" ><img th:src="@{/img/post/list_icon_04.png}"></span>
+											<img style="float:right;" th:if="${post.pcase eq 1}" th:src="@{/img/post/014.small.gif}" alt="精华内容" align="absmiddle">
+											<img style="float:right;" th:if="${post.pcase eq 2}" th:src="@{/img/post/013.small.gif}" alt="版主置顶" align="absmiddle">
+											<img style="float:right;" th:if="${post.pcase eq 3}" th:src="@{/img/post/015.small.gif}" alt="讨论热门" align="absmiddle">
+										</div>
+										<!--帖子的用户信息-->
+										<div class="postinfo">
+											<ul>
+												<!--作者-->
+												<li class="postauthor">
+													<img th:src="@{/img/post/author.png}" title="作者">
+													<a class="atr" style="color: #FF0000;" th:href="@{'/user/viewothers/'+${post.author.uid}}" th:text="${post.author.nickname}">作者名</a>
+												</li>
+												
+												<!--发布时间-->
+												<li class="z">
+													<img th:src="@{/img/post/time.png}" title="发布时间">
+													<span class="post-time" th:text="${post.postingtime}">
+														1970-1-1 00:00:00
+													</span>
+
+												</li>
+												
+												<!--点赞信息-->
+												<li class="y">
+													 <div class="ic_sr" >
+														 <i class="bk_z" title="点赞" th:onclick="'likePost(this,'+${post.pid}+')'" style="cursor: pointer"></i>
+														 <a href="javascript:;"  th:text="${post.plike}">0</a>
+													</div>
+													<div class="ic_sr">
+														 <i class="bk_t" title="查看数"  style="cursor: pointer"></i>
+														 <a href="javascript:;" th:text="${post.visits}">0</a>
+													</div>
+													<div class="ic_s">
+														<i class="bk_r" title="回复数"  style="cursor: pointer"></i>
+														<a href="javascript:;" th:text="${post.replynum}">0</a>
+													</div>
+												</li>
+											</ul>
+
+										</div>
+										
+									</div>
+								</th>
+							</tr>
+
+							<!--结束-->
+							
+							<!--分割线-->
+							<tr class="ts_this">
+								<th style="width: 100%;"><a href="#" title="查看更新" class="forumrefresh">版块主题</a></th>
+							</tr>
+
+
+                            <tr th:each="post:${themePosts}">
+                                <th class="common">
+                                    <div class="author z">
+                                        <a href="#" class="faceimg">
+                                            <!--头像-->
+                                            <img th:src="@{'/img/upload/'+${post.author.headphoto}}">
+                                        </a>
+                                    </div>
+                                    <div class="frmc">
+                                        <em>[<a href="#" th:text="${post.type.tname}">帖子类型</a>]</em>
+                                        <div class="frmc_t">
+                                            <a class="z post_title" th:href="'/themepost/readpost/'+${post.pid}" style="font-weight: bold;color: #2897C5;" th:text="${post.title}">帖子标题</a>
+
+                                        </div>
+                                        <!--帖子的用户信息-->
+                                        <div class="postinfo">
+                                            <ul>
+                                                <!--作者-->
+                                                <li class="postauthor">
+                                                    <img th:src="@{/img/post/author.png}" title="作者">
+                                                    <a class="atr" style="color: #FF0000;" th:href="@{'/user/viewothers/'+${post.author.uid}}" th:text="${post.author.nickname}">作者名</a>
+                                                </li>
+
+                                                <!--发布时间-->
+                                                <li class="z">
+                                                    <img th:src="@{/img/post/time.png}" title="发布时间">
+                                                    <span class="post-time" th:text="${post.postingtime}">
+														1970-1-1 00:00:00
+													</span>
+
+                                                </li>
+
+                                                <!--点赞信息-->
+                                                <li class="y">
+                                                    <div class="ic_sr">
+                                                        <i class="bk_z" title="点赞" th:onclick="'likePost(this,'+${post.pid}+')'" style="cursor: pointer"></i>
+                                                        <a href="javascript:;"  th:text="${post.plike}">0</a>
+                                                    </div>
+                                                    <div class="ic_sr">
+                                                        <i class="bk_t" title="查看数"></i>
+                                                        <a href="javascript:;" th:text="${post.visits}">0</a>
+                                                    </div>
+
+                                                    <div class="ic_s">
+                                                        <i class="bk_r" title="回复数"></i>
+                                                        <a href="javascript:;" th:text="${post.replynum}">0</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+
+                                    </div>
+                                </th>
+                            </tr>
+
+						</table>
+					</div>
+					
+					
+					<!--下一页-->
+					<a class="nextpage" href="javascript:;" curpage="1">下一页</a>
+					<!--页码-->
+					<div class="pages" id="posts-page-under" style="top:5px"></div>
+					
+					<!--发新帖 -->
+					<a href="javascript:;" class="acpost" id="newpost"  title="发新帖">发新帖</a>
+				</div>
+			
+				
+				<!--右边帖子部分-->
+				<div class="y posts_body_right">
+					<!--显示当前板块-->
+					<div class="bks" >
+						<!--板块头-->
+						<div class="bks_h">
+							<div class="z bks_ic" style="background: url(img/bk/0.png) no-repeat;background-size: 100% 100%;"></div>
+							<div class="y bks_it">
+								<div><strong th:text="${theme.tmname}">综合讨论</strong></div>
+								<ul>
+									<li>今日: <span>0</span></li>
+									<li>主题: <span>0</span></li>
+									<li>排名: <span>1</span></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+		</div>
+		
+		<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}" ></script>
+
+		<!-- 富文本 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+		<script type="text/javascript" th:src="@{/js/wangEditor.min.js}"></script>
+
+	    <!--使用themeleaf-->
+	    <script th:inline="javascript">
+            var editor1 ;
+
+            var layer = layui.layer;
+
+            var loginuser = [[${session.user}]];
+
+			//点击发新帖 出现的窗口
+			$("#newpost").click(function (){
+				if (loginuser == null){
+                	layer.msg("请登录后再发帖！");
+				}else{
+                    layer.open({
+                        type:1,
+                        title:"发表新的帖子",
+                        content:'<div id="editor" class="editor"><div class="newpost_title"> <label>标题：</label><input name="title" class="newposttitle" id="themePostTitle" /> <select class="type-select" id="themepost-type"><option value="1">普通帖子</option><option value="2">游戏攻略</option><option value="3">游戏讨论</option><option value="4">召唤策划</option></select></div><div class="editor_h" id="editor_h"></div><div class="editor_f"></div><div class="editor_b" id="editor_b"></div></div><button class="report-post" onclick="addThemePost()">发表</button>',
+                        area: ['900px', '600px'],
+                        offset: 'auto',
+                        closeBtn:2,
+                        shade:0.8,
+                        shadeClose:true,
+                        resize:false
+                    });
+				}
+
+				creatFWB();
+			})
+
+            //发帖子
+            function addThemePost() {
+			    //获取发表帖子的内容
+                var content = editor1.txt.html();
+                //标题
+                var title = $("#themePostTitle").val();
+                //获取当前板块id
+                var tmid = [[${tmid}]];
+                //帖子类型id
+                var tyid = $("#themepost-type").val();
+                //获取当前登录的用户id
+                var uid = loginuser.uid;
+
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "/themepost/addThemePost",
+                    data: {
+                        title:title,
+                        content:content,
+                        tmid:tmid,
+                        tyid:tyid,
+                        uid:uid
+                    },
+                    success: function(data){
+                        layer.msg(data['msg'],{icon: 1,time: 1000});
+
+                        setTimeout(function(){
+                            window.location.href = "/themepost/readpost/"+data['pid'];
+                        },1000);
+
+                    }
+                });
+            }
+
+            //点赞
+            function likePost(data,ppid) {
+			    //显示点赞以后的数据
+                var next = $(data).next();
+
+                //还未被点赞
+                if (next.attr("isliked")!='true'){
+                    next.text(parseInt(next.text())+1);
+                    $.ajax({
+                        type: "POST",
+                        dataType: "text",
+                        url: "/themepost/addlikepost",
+                        data: {
+                            pid:ppid
+                        },
+                        success: function(likemsg){
+                            layer.msg(likemsg);
+                            next.attr("isliked","true");
+                        }
+                    });
+                }else{
+                    layer.msg("不可以重复点赞！");
+                }
+
+
+
+
+            }
+
+			//创建富文本
+			function creatFWB(){
+				var E = window.wangEditor;
+				// 或者 var editor = new E( document.getElementById('editor') )
+                editor1 = new E('#editor_h', '#editor_b')  // 两个参数也可以传入 elem 对象，class 选择器
+				editor1.customConfig.menus = [
+												'head', // 标题
+												'bold',// 粗体
+												'fontSize', // 字号
+												'underline',// 下划线
+												'foreColor',// 文字颜色
+												'link',  // 插入链接
+												'quote',  // 引用
+												'emoticon',  // 表情
+												'image',  // 插入图片
+												'video',  // 插入视频
+											];
+				editor1.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+                //当前项目的地址
+				var addr = '/';
+
+				/*配置表情*/
+				editor1.customConfig.emotions = [
+													{
+														// tab 的标题
+														title: '默认',
+														// type -> 'emoji' / 'image'
+														type: 'image',
+														// content -> 数组
+														content: [
+															{
+																alt: '[委屈]',
+																src: addr+'img/bilibili/d委屈.png'
+															},
+															{
+																alt: '[吃惊]',
+																src: addr+'img/bilibili/吃惊.png'
+															},
+															{
+																alt: '[大哭]',
+																src: addr+'img/bilibili/大哭.png'
+															},
+															{
+																alt: '[大笑]',
+																src: addr+'img/bilibili/大笑.png'
+															},
+															{
+																alt: '[第一]',
+																src: addr+'img/bilibili/第一.png'
+															},
+															{
+																alt: '[汗]',
+																src: addr+'img/bilibili/汗.png'
+															},
+															{
+																alt: '[喝水]',
+																src: addr+'img/bilibili/喝水.png'
+															},
+															{
+																alt: '[困惑]',
+																src: addr+'img/bilibili/困惑.png'
+															},
+															{
+																alt: '[卖萌]',
+																src: addr+'img/bilibili/卖萌.png'
+															},
+															{
+																alt: '[怒]',
+																src: addr+'img/bilibili/怒.png'
+															},
+															{
+																alt: '[吐魂]',
+																src: addr+'img/bilibili/吐魂.png'
+															},
+															{
+																alt: '[无言]',
+																src: addr+'img/bilibili/无言.png'
+															},
+															{
+																alt: '[耶]',
+																src: addr+'img/bilibili/耶.png'
+															},
+															{
+																alt: '[疑问]',
+																src: addr+'img/bilibili/疑问.png'
+															},
+															{
+																alt: '[尴尬]',
+																src: addr+'img/bilibili/尴尬.png'
+															}
+														]
+													}
+												]
+				editor1.create();
+
+			}
+
+			//改变帖子的时间
+			function changeTime(){
+                var times = document.getElementsByClassName("post-time");
+                for (var i = 0; i < times.length; i++) {
+					var time = $(times[i]).html();
+                    var result = getDateDiff(time);
+                    $(times[i]).html(result);
+                }
+			}
+            changeTime();
+
+            //分页  在id=posts-page中创建
+            var laypage = layui.laypage;
+
+            //执行一个laypage实例
+            laypage.render({
+                    elem: 'posts-page' //id
+                    ,count: [[${count}]] //数据总数，从服务端得到
+                    ,limit: 25  //每页显示25条数据
+                    ,theme:"#1E9FFF"
+                    ,curr: [[${curr}]]  //当前页
+                    ,jump: function(obj, first){
+                        //obj包含了当前分页的所有参数，比如：
+                        var curr = obj.curr; //得到当前页，以便向服务端请求对应页的数据。
+                        var limit = obj.limit; //得到每页显示的条数
+
+                        var this_tmid = [[${tmid}]];//获得当前板块的id  tmid
+
+                        //如果是第一次则不触发此事件
+                        if (!first){
+                            window.location.href = "/themepost/loadThemePostsByPage/"+this_tmid+"/"+curr;
+                        }
+
+                    }
+                })
+
+            laypage.render({
+                    elem: 'posts-page-under' //id
+                    ,count: [[${count}]] //数据总数，从服务端得到
+                    ,limit: 25  //每页显示25条数据
+                    ,theme:"#1E9FFF"
+                    ,curr: [[${curr}]]  //当前页
+                    ,jump: function(obj, first){
+                        //obj包含了当前分页的所有参数，比如：
+                        var curr = obj.curr; //得到当前页，以便向服务端请求对应页的数据。
+                        var limit = obj.limit; //得到每页显示的条数
+
+                        var this_tmid = [[${tmid}]];//获得当前板块的id  tmid
+
+                        //如果是第一次则不触发此事件
+                        if (!first){
+                            window.location.href = "/themepost/loadThemePostsByPage/"+this_tmid+"/"+curr;
+                        }
+
+                    }
+                })
+
+                function loginout(){
+                    $.ajax({
+                        type: "POST",
+                        dataType: "text",
+                        url: "/user/loginout",
+                        success: function(data){
+
+                            layer.msg(data,{icon: 1,time: 1000});
+                            setTimeout(function(){
+                                window.location.href = "/index";
+                            },1000);
+                        }
+                    });
+                }
+
+		</script>
+
+	</body>
+	
+</html>

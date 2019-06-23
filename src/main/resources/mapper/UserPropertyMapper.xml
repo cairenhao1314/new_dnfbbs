@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.game.dnf.mapper.UserPropertyMapper">
+
+
+    <select id="queryUserPropertyByUid" resultType="UserProperty">
+        select * from dnf_user_property where uid =#{uid}
+    </select>
+
+    <insert id="insertUserPropertyByUid" parameterType="int">
+        insert into dnf_user_property values(null,#{uid},0,0,0,0,0)
+    </insert>
+
+    <update id="updateUserProperty" parameterType="UserProperty">
+        update dnf_user_property
+        <set>
+            <if test="goldcoin != 0 ">goldcoin = goldcoin + #{goldcoin},</if>
+            <if test="EXP != 0 ">EXP = EXP + #{EXP},</if>
+            <if test="charm != 0 ">charm = charm + #{charm},</if>
+            <if test="fanscoin != 0 ">fanscoin = fanscoin + #{fanscoin},</if>
+            <if test="coupon != 0 ">coupon = coupon + #{coupon},</if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+</mapper>

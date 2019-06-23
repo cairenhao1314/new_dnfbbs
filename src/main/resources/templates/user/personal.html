@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>他人的个人资料</title>
+		<!--当前页面的css文件-->
+		<link rel="stylesheet" th:href="@{/css/antherpost.css}" />
+		<link rel="stylesheet" th:href="@{/css/anther.css}" />
+		<link rel="stylesheet" th:href="@{/css/common_style.css}" />
+
+		<link rel="stylesheet" th:href="@{/css/dnf_index.css}" />
+		<link rel="stylesheet" th:href="@{/css/person.css}" />
+
+		<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+	</head>
+
+	<body class="dnf_index">
+	<div class="index_shadow">
+		<div class="shadow_top">
+			<div class="choose_module">
+				<div class="headtop">
+					<a class="collect" href="javascript:;" title="收藏本站"></a>
+				</div>
+				<div class="row_top">
+					<div class="nv">
+						<div class="nv1">
+							<div class="nv1_tab">
+								<a class="a" href="/index" hidefocus="true" title="BBS">
+									<span>论坛首页</span>
+								</a>
+							</div>
+							<div class="nv1_tab cut">
+								<a class="a" hidefocus="true" title="切换版面">
+									<span>切换版块</span>
+								</a>
+								<!--隐藏的模块-->
+								<div class="nav_se">
+									<div class="nav_se_l">
+										<li>
+											<a>游戏讨论</a>
+										</li>
+										<li>
+											<a><span>官方专区</span></a>
+										</li>
+										<li>
+											<a><span>灌水闲谈</span></a>
+										</li>
+										<li>
+											<a><span>管理专区</span></a>
+										</li>
+									</div>
+									<div class="nav_se_r">
+										<ul>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/1/1">综合讨论</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/2/1">体验服</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/3/1">论坛快讯</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/4/1">DNF中医馆</a>
+											</li>
+										</ul>
+										<ul>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/5/1">客服·BUG&amp;服务器</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/6/1">TP安全复查</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/7/1">DNF手游筹备区</a>
+											</li>
+										</ul>
+										<ul>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/8/1">月光酒馆</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/9/1">灌水闲谈</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/10/1">奶粉SHOW</a>
+											</li>
+										</ul>
+										<ul>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/11/1">论坛事务</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/12/1">非工作人员禁入</a>
+											</li>
+											<li>
+												<a href="/themepost/loadThemePostsByPage/13/1">赛丽亚的小黑屋</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="nv1_tab">
+								<a class="a" href="#" hidefocus="true" title="荣耀殿堂">
+									<span>荣耀殿堂</span>
+								</a>
+							</div>
+							<div class="nv1_tab">
+								<a class="a" href="#" hidefocus="true" title="积分商城">
+									<span>积分商城</span>
+								</a>
+							</div>
+							<div class="nv1_tab">
+								<a class="a" href="#" hidefocus="true" title="实名认证">
+									<span>实名认证</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--登录显示-->
+				<!--user为空的话-->
+				<div class="login" th:if="${session.user} == null">
+					<a class="aclogin" href="/login">登录</a>
+					<a class="acsign" href="/register">注册</a>
+				</div>
+
+				<!--user不为空的话-->
+				<div class="user" th:if="${session.user} != null">
+						<span class="user_info">
+							<!--头像-->
+							<a class="avar" href="/user/headphoto" target="_blank">
+								<img th:src="@{'/img/upload/'+${session.user.headphoto}}">
+							</a>
+							<div class="hd_prompt"></div>
+							<!--个人列表list-->
+							<div class="info">
+								<a href="/user/info" style="margin-top:10px;" target="_blank" title="访问我的空间">
+									<b th:text="${session.user.phone}">手机号码</b>
+								</a>
+
+
+								<a class="usgroup" href="/user/points">
+									<label>无色小晶体</label>
+								</a>
+
+								<div class="head_hr"></div>
+
+								<a href="#">每日签到</a>
+								<div class="head_hr"></div>
+								<a href="#" >消息中心</a>
+								<a href="/user/info">个人中心</a>
+								<a th:href="@{'/user/antherPosts/'+${session.user.uid}}">我的帖子</a>
+								<!--<a href="#">我的收藏</a>-->
+								<a class="logout" href="javascript:;" onclick="loginout()">退出登陆</a>
+							</div>
+						</span>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<!--空白部分-->
+	<div class="space_white">
+
+	</div>
+
+		<!--正文-->
+		<section class="wp">
+			<div class="bm">
+				<div class="z">
+					<a href=".." class="nvhm" title="首页">地下城与勇士官方论坛</a>
+					<em>›</em>
+					<a href="#">心念i</a>
+					<em>›</em> 个人资料
+				</div>
+			</div>
+			<div class="person-info">
+				<!--左边-->
+				<div class="info-left">
+					<h2 class="info-sz">设置</h2>
+					<ul>
+						<li>
+							<a href="/user/faceimg">上传头像</a>
+						</li>
+						<li>
+							<a href="#">基本信息</a>
+						</li>
+						<li>
+							<a href="/user/changePwd">修改密码</a>
+						</li>
+						<li>
+							<a href="/user/myProperty">积分</a>
+						</li>
+					</ul>
+				</div>
+				<!--右边-->
+				<div class="info-right">
+					<div class="info-right-top">
+						<a href="#">修改头像</a>
+					</div> 
+					<form action="/user/uploadhead" method="post" enctype="multipart/form-data">
+						<table class="info-tab">
+							<tr>
+								<th>用户名</th>
+								<td th:text="${session.user.phone}">dnf论坛</td>
+							</tr>
+							<tr>
+								<th>头像</th>
+								<td>
+									<div class="info-head">
+										<img th:src="@{'/img/upload/'+${session.user.headphoto}}" id="userface" />
+										<input type="file" id="file" name="headphoto" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>个性签名</th>
+								<td>
+									<input type="text" name="signature" class="info-sign" style="width: 300px" th:value="${session.user.signature}" />
+								</td>
+							</tr>
+							<tr>
+								<th>&nbsp;</th>
+								<td>
+									<input type="submit" class="info-head-sub" value="修改" />
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</section>
+
+		<script th:src="@{/js/jquery-1.8.3.js}"></script>
+		<script>
+			$("#file").on("change", function(e) {
+				var file = e.target.files[0];
+				var maxSize = 2048; //设置图片上传最大值为2M
+				var name = file.name;
+				var size = (file.size / 1024).toFixed(2);
+				var type = file.type;
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(e) {
+					var result = e.target.result;
+					var image = new Image();
+					image.src = result;
+					image.onload = function() {
+						if(size > maxSize) {
+							//判断图像大小，大于2M则压缩后上传 ，小于2M直接上传无需压缩
+							var img64 = compress(image, 100, 100, 0.7);
+							$("#userface").attr("src", img64); //实现图片预览功能
+							//调用后台上传接口 ，把img64当参数传给接口，接口调用成功则返回头像上传成功后的服务器的访问地址，把接口返回的图片地址赋值给页面上img的src即可
+							//uploadImg(img64);
+						} else {
+							$("#userface").attr("src", result); //实现图片预览功能
+							//调用后台上传接口 ，把result当参数传给接口，接口调用成功则返回头像上传成功后的服务器的访问地址，把接口返回的图片地址赋值给页面上img的src即可
+						}
+					}
+				};
+			});
+
+			/**canvas图片压缩函数
+			 * @params
+			 * img:需要压缩的图片对象
+			 * width:压缩后的宽度
+			 * height:压缩后的高
+			 * ratio:图片压缩质量(0-1);
+			 * */
+			function compress(img, width, height, ratio) {
+				var canvas, ctx, img64;
+				canvas = document.createElement('canvas');
+				canvas.width = width;
+				canvas.height = height;
+				ctx = canvas.getContext("2d");
+				ctx.drawImage(img, 0, 0, width, height);
+				img64 = canvas.toDataURL("image/jpeg", ratio);
+				return img64;
+			}
+
+            function loginout(){
+                $.ajax({
+                    type: "POST",
+                    dataType: "text",
+                    url: "/user/loginout",
+                    success: function(data){
+
+                        layer.msg(data,{icon: 1,time: 1000});
+                        setTimeout(function(){
+                            window.location.href = "/index";
+                        },1000);
+                    }
+                });
+            }
+
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.game.dnf.mapper.UserMapper">
+
+    <resultMap id="newUser" type="user">
+        <id column="uid" property="uid"/>
+        <result column="nickname" property="nickname"/>
+        <result column="pwd" property="pwd"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="ustatus" property="ustatus"/>
+        <result column="role" property="role"/>
+        <result column="headphoto" property="headphoto"/>
+        <result column="registertime" property="registertime"/>
+        <result column="signature" property="signature"/>
+        <collection property="badges" column="uid" javaType="ArrayList" ofType="com.game.dnf.pojo.Badge" select="com.game.dnf.mapper.BadgeMapper.getUserBadges" />
+    </resultMap>
+
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
+        insert into dnf_user
+        values (null,#{nickname},#{pwd},#{phone},#{email},-1,0,'ulogo.gif',now(),'这个用户很懒，什么也没写...');
+    </insert>
+
+    <select id="queryUser" parameterType="User" resultType="User">
+        select * from dnf_user
+        <where>
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+            <if test="pwd != null">
+                and pwd = #{pwd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryUsers" resultType="User">
+        select * from dnf_user
+    </select>
+
+    <select id="getUserByUid" resultType="User" parameterType="int">
+        select * from dnf_user where uid = #{uid}
+    </select>
+
+    <select id="getOtherUserByUid" resultType="User" parameterType="int">
+        select uid,nickname,ustatus,role,headphoto,signature from dnf_user where uid=#{uid}
+    </select>
+
+    <select id="queryUsersByRequire" parameterType="User" resultType="User">
+        select * from dnf_user
+        <where>
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+            <if test="ustatus != 0">
+                and ustatus = #{ustatus}
+            </if>
+            <if test="role != 0">
+                and role = #{role}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateUser" parameterType="User">
+        update dnf_user
+        <set>
+            <if test="pwd != null">
+                pwd = #{pwd},
+            </if>
+            <if test="headphoto != null">
+                headphoto = #{headphoto},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="ustatus != 0">
+                ustatus = #{ustatus},
+            </if>
+            <if test="role != 0">
+                role = #{role},
+            </if>
+            <if test="signature != null">
+                signature = #{signature},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <select id="getNewUser" resultMap="newUser" parameterType="int">
+        select * from dnf_user where uid=#{uid}
+    </select>
+
+
+
+</mapper>
